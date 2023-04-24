@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace movie_restful_api_csharp.Models
+namespace movie_system_csharp.Models
 {
     public class GenreModel
     {
@@ -8,7 +8,8 @@ namespace movie_restful_api_csharp.Models
         [Key]
         public int Id { get; set; }
 
-        public int Tmdb_Id { get; set; }
+        [Required]
+        public int TmdbId { get; set; }
         [Required]
         [StringLength(50)]
         public string? Title { get; set; }
@@ -16,8 +17,9 @@ namespace movie_restful_api_csharp.Models
         [StringLength(250)]
         public string? Description { get; set; }
 
-        // Navigation properties
-        public List<UserGenreModel> Genre { get; set; }
-        public List<MovieGenreModel> Movie { get; set; }
+        //Navigation properties
+        public List<LikedGenreModel> LikedGenres { get; set; }
+        public List<MovieRatingModel> MovieRatings { get; set; }
+        public List<MovieGenreModel> MovieGenres { get; set; }
     }
 }

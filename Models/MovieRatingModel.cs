@@ -1,25 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace movie_restful_api_csharp.Models
+namespace movie_system_csharp.Models
 {
     public class MovieRatingModel
     {
+        //Primary Key
         [Key]
         public int Id { get; set; }
 
-        [Required]
         public int Rating { get; set; }
 
-        // Foregin Key
-        [ForeignKey("Movie")]
-        public int? Movie_Id { get; set; }
-        [ForeignKey("User")]
-        public int? User_Id { get; set; }
+        //Foregin Key
+        public int? MovieId { get; set; }
+        public int? UserId { get; set; }
 
-        // Navigation properties
-        public virtual MovieModel Movie { get; set; }
-        public virtual UserModel User { get; set; }
+        //Navigation properties
+        public virtual MovieModel Movies { get; set; }
+        public virtual UserModel Users { get; set; }
 
     }
 }

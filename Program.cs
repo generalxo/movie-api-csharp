@@ -1,3 +1,5 @@
+using movie_restful_api_csharp.Data;
+
 namespace movie_restful_api_csharp
 {
     public class Program
@@ -26,24 +28,31 @@ namespace movie_restful_api_csharp
 
             app.UseAuthorization();
 
-            //var summaries = new[]
-            //{
-            //"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-            //};
+            // Get All Users
+            app.MapGet("/user", (HttpContext httpContext) =>
+            {
+                ApplicationDbContext applicationDbContext = new();
+                UserRepository userRepository = new UserRepository(applicationDbContext);
 
-            //app.MapGet("/weatherforecast", (HttpContext httpContext) =>
-            //{
-            //    var forecast = Enumerable.Range(1, 5).Select(index =>
-            //        new WeatherForecast
-            //        {
-            //            Date = DateTime.Now.AddDays(index),
-            //            TemperatureC = Random.Shared.Next(-20, 55),
-            //            Summary = summaries[Random.Shared.Next(summaries.Length)]
-            //        })
-            //        .ToArray();
-            //    return forecast;
-            //})
-            //.WithName("GetWeatherForecast");
+                return userRepository.GetAll();
+            })
+                .WithName("GetAllUsers");
+
+            // Get all genres connected to a user
+
+            // Get all movies connected to a user
+
+            // Get rating on a movie connected to a user
+
+            // Get movie recomendation connected to a genre
+
+            // Post rating on a movie connected to a user
+
+            // Post new movie connected to a user
+
+            // Post new movie connected to a genre
+
+
 
             app.Run();
         }

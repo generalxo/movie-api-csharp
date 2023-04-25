@@ -16,10 +16,10 @@ namespace movie_restful_api_csharp.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //Workstation
-            //optionsBuilder.UseSqlServer("Data Source=DESKTOP-JD35EGR; Initial Catalog=DevMovieDb;Integrated Security=true");
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-JD35EGR; Initial Catalog=DevMovieDb;Integrated Security=true");
 
             //Laptop
-            optionsBuilder.UseSqlServer("Data Source=PETERPANDA; Initial Catalog=DevMovieDb;Integrated Security=true");
+            //optionsBuilder.UseSqlServer("Data Source=PETERPANDA; Initial Catalog=DevMovieDb;Integrated Security=true");
 
         }
 

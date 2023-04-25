@@ -1,4 +1,5 @@
 using movie_restful_api_csharp.Data;
+using movie_system_csharp.Models;
 
 namespace movie_restful_api_csharp
 {
@@ -55,18 +56,58 @@ namespace movie_restful_api_csharp
             })
                 .WithName("GetGenresByUser");
 
-            // Get all movies connected to a user
+            //Get all movies by movie.user_id
+            app.MapGet("/getmoviesbyuser/{id}", (HttpContext httpContext, int id) =>
+            {
+                ApplicationDbContext applicationDbContext = new();
+                MovieRepository movieRepository = new MovieRepository(applicationDbContext);
+                return movieRepository.GetByCondition(q => q.UserId == id);
+            })
+                .WithName("/GetMoviesByUser");
 
-            // Get rating on a movie connected to a user
+            //Post a new movierating
+            app.MapPost("/postmovierating", (HttpContext httpContext, MovieRatingModel movieRatingModel) =>
+            {
+                ApplicationDbContext applicationDbContext = new();
+                MovieRatingRepository movieRatingRepository = new MovieRatingRepository(applicationDbContext);
+                movieRatingRepository.Create(movieRatingModel);
+                applicationDbContext.SaveChanges();
+                return movieRatingRepository;
+            })
+                .WithName("PostMovieRating");
 
-            // Get movie recomendation connected to a genre
+            //Post a new likedgenre
+            app.MapPost("/postlikedgenre", (HttpContext httpContext, LikedGenreModel likedGenreModel) =>
+            {
+                ApplicationDbContext applicationDbContext = new();
+                LikedGenreRepository likedGenreRepository = new LikedGenreRepository(applicationDbContext);
+                likedGenreRepository.Create(likedGenreModel);
+                applicationDbContext.SaveChanges();
+                return likedGenreRepository;
+            })
+                .WithName("PostLikedGenre");
 
-            // Post rating on a movie connected to a user
+            //Post a new movie
+            app.MapPost("/postmovie", (HttpContext httpContext, MovieModel movieModel) =>
+            {
+                ApplicationDbContext applicationDbContext = new();
+                MovieRepository movieRepository = new MovieRepository(applicationDbContext);
+                movieRepository.Create(movieModel);
+                applicationDbContext.SaveChanges();
+                return movieRepository;
+            })
+                .WithName("PostMovie");
 
-            // Post new movie connected to a user
-
-            // Post new movie connected to a genre
-
+            // GET movies related to a genre from an external api tmdb the url should look like this : https://api.themoviedb.org/3/discover/movie?api_key=<<api_key>>&with_genres=<<id>> with httpclient
+            app.MapGet("/getmoviesbygenre/{id}", (HttpContext httpContext, int id) =>
+            {
+                var api_key = "b5ced27703b7b4556f41ed1063214729";
+                var client = new HttpClient();
+                var response = client.GetAsync($"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_genres={id}").Result;
+                var content = response.Content.ReadAsStringAsync().Result;
+                return content;
+            })
+                .WithName("GetMoviesByGenre");
 
 
             app.Run();

@@ -39,6 +39,21 @@ namespace movie_restful_api_csharp
                 .WithName("GetAllUsers");
 
             // Get all genres connected to a user
+            app.MapGet("/getlikedgenre/{id}", (HttpContext httpContext, int id) =>
+            {
+                ApplicationDbContext applicationDbContext = new();
+                LikedGenreRepository likedGenre = new LikedGenreRepository(applicationDbContext);
+                UserRepository userRepository = new UserRepository(applicationDbContext);
+                GenreRepository genreRepository = new GenreRepository(applicationDbContext);
+
+                var query = likedGenre.GetByCondition(q => q.UserId == id).Join(genreRepository.GetAll(),
+                likedGenre => likedGenre.GenreId,
+                genre => genre.Id,
+                (likedGenre, genre) => genre).ToList();
+
+                return query;
+            })
+                .WithName("GetGenresByUser");
 
             // Get all movies connected to a user
 

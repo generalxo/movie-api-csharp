@@ -98,7 +98,7 @@ namespace movie_restful_api_csharp
             })
                 .WithName("PostMovie");
 
-            // GET movies related to a genre from an external api tmdb the url should look like this : https://api.themoviedb.org/3/discover/movie?api_key=<<api_key>>&with_genres=<<id>> with httpclient
+            //Discover New movies
             app.MapGet("/getmoviesbygenre/{id}", (HttpContext httpContext, int id) =>
             {
                 var api_key = "b5ced27703b7b4556f41ed1063214729";

@@ -25,51 +25,6 @@ namespace movie_restful_api_csharp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //LikedGenres
-            modelBuilder.Entity<LikedGenreModel>()
-                .HasOne(x => x.Genres)
-                .WithMany(x => x.LikedGenres)
-                .HasForeignKey(x => x.GenreId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<LikedGenreModel>()
-                .HasOne(x => x.Users)
-                .WithMany(x => x.LikedGenres)
-                .HasForeignKey(x => x.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            //Movies
-            modelBuilder.Entity<MovieModel>()
-                .HasOne(x => x.Users)
-                .WithMany(x => x.Movies)
-                .HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.NoAction);
-
-            //MovieGenres
-            modelBuilder.Entity<MovieGenreModel>()
-                .HasOne(x => x.Genres)
-                .WithMany(x => x.MovieGenres)
-                .HasForeignKey(x => x.GenreId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<MovieGenreModel>()
-                .HasOne(x => x.Movies)
-                .WithMany(x => x.MovieGenres)
-                .HasForeignKey(x => x.MovieId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            //MovieRatings
-            modelBuilder.Entity<MovieRatingModel>()
-                .HasOne(x => x.Movies)
-                .WithMany(x => x.MovieRatings)
-                .HasForeignKey(x => x.MovieId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<MovieRatingModel>()
-                .HasOne(x => x.Users)
-                .WithMany(x => x.MovieRatings)
-                .HasForeignKey(x => x.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
-
             modelBuilder.Entity<GenreModel>().HasData(new GenreModel[] {
                 new GenreModel{Id= 1,TmdbId=28,Title="Action", Description="Explosions, Guns & Violence"},
                 new GenreModel{Id= 2,TmdbId=12,Title="Adventure", Description="Explore new things"},

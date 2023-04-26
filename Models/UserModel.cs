@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 namespace movie_system_csharp.Models
 {
     public class UserModel
@@ -12,8 +11,8 @@ namespace movie_system_csharp.Models
         public string? Email { get; set; }
 
         //Navigation properties
-        public List<LikedGenreModel> LikedGenres { get; set; }
-        public List<MovieModel> Movies { get; set; }
-        public List<MovieRatingModel> MovieRatings { get; set; }
+        //public List<LikedGenreModel> LikedGenres { get; set; }
+        //public List<MovieModel> Movies { get; set; }
+        //public List<MovieRatingModel> MovieRatings { get; set; }
     }
 }

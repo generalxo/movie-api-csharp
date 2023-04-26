@@ -18,8 +18,7 @@ namespace movie_system_csharp.Models
         public string? Description { get; set; }
 
         //Navigation properties
-        public List<LikedGenreModel> LikedGenres { get; set; }
-        public List<MovieRatingModel> MovieRatings { get; set; }
-        public List<MovieGenreModel> MovieGenres { get; set; }
+        //public List<LikedGenreModel> LikedGenres { get; set; }
+        //public List<MovieGenreModel> MovieGenres { get; set; }
     }
 }

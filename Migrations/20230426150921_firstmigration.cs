@@ -4,7 +4,7 @@
 
 namespace movie_restful_api_csharp.Migrations
 {
-    public partial class migration : Migration
+    public partial class firstmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,8 +43,8 @@ namespace movie_restful_api_csharp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    GenreId = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    GenreId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,12 +53,14 @@ namespace movie_restful_api_csharp.Migrations
                         name: "FK_LikedGenres_Genres_GenreId",
                         column: x => x.GenreId,
                         principalTable: "Genres",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_LikedGenres_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,7 +70,7 @@ namespace movie_restful_api_csharp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Link = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,7 +79,8 @@ namespace movie_restful_api_csharp.Migrations
                         name: "FK_Moveis_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,8 +89,8 @@ namespace movie_restful_api_csharp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MovieId = table.Column<int>(type: "int", nullable: true),
-                    GenreId = table.Column<int>(type: "int", nullable: true)
+                    MovieId = table.Column<int>(type: "int", nullable: false),
+                    GenreId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,12 +99,14 @@ namespace movie_restful_api_csharp.Migrations
                         name: "FK_MovieGenres_Genres_GenreId",
                         column: x => x.GenreId,
                         principalTable: "Genres",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_MovieGenres_Moveis_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Moveis",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,28 +116,24 @@ namespace movie_restful_api_csharp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Rating = table.Column<int>(type: "int", nullable: false),
-                    MovieId = table.Column<int>(type: "int", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    GenreModelId = table.Column<int>(type: "int", nullable: true)
+                    MovieId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MovieRatings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MovieRatings_Genres_GenreModelId",
-                        column: x => x.GenreModelId,
-                        principalTable: "Genres",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_MovieRatings_Moveis_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Moveis",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_MovieRatings_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.InsertData(
@@ -185,11 +186,6 @@ namespace movie_restful_api_csharp.Migrations
                 name: "IX_MovieGenres_MovieId",
                 table: "MovieGenres",
                 column: "MovieId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MovieRatings_GenreModelId",
-                table: "MovieRatings",
-                column: "GenreModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MovieRatings_MovieId",

@@ -29,6 +29,7 @@ namespace movie_restful_api_csharp
 
             app.UseAuthorization();
 
+            #region Get Methods
             // Get All Users
             app.MapGet("/user", (HttpContext httpContext) =>
             {
@@ -65,6 +66,45 @@ namespace movie_restful_api_csharp
             })
                 .WithName("/GetMoviesByUser");
 
+            //Get all movieRatings by movie.user_id
+            app.MapGet("/getmovieratingsbyuser/{id}", (HttpContext httpContext, int id) =>
+            {
+                ApplicationDbContext applicationDbContext = new();
+                MovieRatingRepository movieRatingRepository = new MovieRatingRepository(applicationDbContext);
+                return movieRatingRepository.GetByCondition(q => q.UserId == id);
+            })
+                .WithName("/GetMovieRatingsByUser");
+
+            //Discover New movies with local db id
+            app.MapGet("/getmoviesbygenre/{id}", (HttpContext httpContext, int id) =>
+            {
+                ApplicationDbContext applicationDbContext = new();
+                GenreRepository genreRepository = new GenreRepository(applicationDbContext);
+                var genre = genreRepository.GetByCondition(q => q.Id == id).ToList();
+                int tmdb_id = genre[0].TmdbId;
+
+                var api_key = "b5ced27703b7b4556f41ed1063214729";
+                var client = new HttpClient();
+                var response = client.GetAsync($"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_genres={tmdb_id}").Result;
+                var content = response.Content.ReadAsStringAsync().Result;
+                return content;
+            })
+                .WithName("GetMoviesByGenre");
+
+            //Discover New movies with tmbd id
+            app.MapGet("getmoviesbygenre/tmdb/{id}", (HttpContext httpContext, int id) =>
+            {
+                var api_key = "b5ced27703b7b4556f41ed1063214729";
+                var client = new HttpClient();
+                var response = client.GetAsync($"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_genres={id}").Result;
+                var content = response.Content.ReadAsStringAsync().Result;
+                return content;
+            })
+                .WithName("GetMoviesByGenreTmdb");
+
+            #endregion
+
+            #region Post Methods
             //Post a new movierating
             app.MapPost("/postmovierating", (HttpContext httpContext, MovieRatingModel movieRatingModel) =>
             {
@@ -72,7 +112,7 @@ namespace movie_restful_api_csharp
                 MovieRatingRepository movieRatingRepository = new MovieRatingRepository(applicationDbContext);
                 movieRatingRepository.Create(movieRatingModel);
                 applicationDbContext.SaveChanges();
-                return movieRatingRepository;
+                return movieRatingModel;
             })
                 .WithName("PostMovieRating");
 
@@ -83,7 +123,7 @@ namespace movie_restful_api_csharp
                 LikedGenreRepository likedGenreRepository = new LikedGenreRepository(applicationDbContext);
                 likedGenreRepository.Create(likedGenreModel);
                 applicationDbContext.SaveChanges();
-                return likedGenreRepository;
+                return likedGenreModel;
             })
                 .WithName("PostLikedGenre");
 
@@ -94,20 +134,11 @@ namespace movie_restful_api_csharp
                 MovieRepository movieRepository = new MovieRepository(applicationDbContext);
                 movieRepository.Create(movieModel);
                 applicationDbContext.SaveChanges();
-                return movieRepository;
+                return movieModel;
             })
                 .WithName("PostMovie");
+            #endregion
 
-            //Discover New movies
-            app.MapGet("/getmoviesbygenre/{id}", (HttpContext httpContext, int id) =>
-            {
-                var api_key = "b5ced27703b7b4556f41ed1063214729";
-                var client = new HttpClient();
-                var response = client.GetAsync($"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_genres={id}").Result;
-                var content = response.Content.ReadAsStringAsync().Result;
-                return content;
-            })
-                .WithName("GetMoviesByGenre");
 
 
             app.Run();

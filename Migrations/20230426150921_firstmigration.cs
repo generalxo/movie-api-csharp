@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
-
+// Auto generated code has been slightly modified. All tables have no action on delete.
 namespace movie_restful_api_csharp.Migrations
 {
     public partial class firstmigration : Migration

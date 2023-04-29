@@ -5,6 +5,7 @@ namespace movie_restful_api_csharp.Data
 {
     public class ApplicationDbContext : DbContext
     {
+        // Database tables
         public DbSet<UserModel> Users { get; set; }
         public DbSet<GenreModel> Genres { get; set; }
         public DbSet<LikedGenreModel> LikedGenres { get; set; }
@@ -12,7 +13,7 @@ namespace movie_restful_api_csharp.Data
         public DbSet<MovieGenreModel> MovieGenres { get; set; }
         public DbSet<MovieRatingModel> MovieRatings { get; set; }
 
-
+        // Database connection
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //Workstation
@@ -23,6 +24,7 @@ namespace movie_restful_api_csharp.Data
 
         }
 
+        // Database seeding
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<GenreModel>().HasData(new GenreModel[] {

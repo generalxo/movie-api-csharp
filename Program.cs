@@ -139,9 +139,8 @@ namespace movie_restful_api_csharp
                 .WithName("PostMovie");
             #endregion
 
-
-
             app.Run();
+            
         }
     }
 }

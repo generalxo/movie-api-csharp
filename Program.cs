@@ -83,7 +83,8 @@ namespace movie_restful_api_csharp
                 var genre = genreRepository.GetByCondition(q => q.Id == id).ToList();
                 int tmdb_id = genre[0].TmdbId;
 
-                var api_key = "b5ced27703b7b4556f41ed1063214729";
+                //Edit api_key to your own key from TMDB
+                var api_key = "Your api key";
                 var client = new HttpClient();
                 var response = client.GetAsync($"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_genres={tmdb_id}").Result;
                 var content = response.Content.ReadAsStringAsync().Result;
@@ -94,7 +95,8 @@ namespace movie_restful_api_csharp
             //Discover New movies with tmbd id
             app.MapGet("getmoviesbygenre/tmdb/{id}", (HttpContext httpContext, int id) =>
             {
-                var api_key = "b5ced27703b7b4556f41ed1063214729";
+                //Edit api_key to your own key from TMDB
+                var api_key = "Your api key";
                 var client = new HttpClient();
                 var response = client.GetAsync($"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_genres={id}").Result;
                 var content = response.Content.ReadAsStringAsync().Result;
@@ -140,7 +142,7 @@ namespace movie_restful_api_csharp
             #endregion
 
             app.Run();
-            
+
         }
     }
 }

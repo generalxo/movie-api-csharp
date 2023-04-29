@@ -1,6 +1,23 @@
-# Movie Restful API in C#
+# Movie API in C#
 ## Description
-This is a simple RESTful API for movies & also calls TMDB's API. It is written in C# and uses ASP.NET Core 3.1. It uses a SQLite database to store the movies. The API supports the following operations:
+This is a simple minimal API for movies & also calls TMDB's API. It is written in C# and uses ASP.NET Core & It uses a SQL database to store the movies. 
+This API was created as a school project. It is not intended for production use.
+
+To learn more about TMDB visit their website: 
+<picture>
+<a href="https://www.themoviedb.org/"><img width="80" alt="Container diagram." src="github/blue_short-tmdb.svg"></a>
+</picture>
+
+### Requirements
+SSMS, Visual Studio, TMDB API Key
+
+### Installation
+You will need to edit the connection string in ApplicationDbContext.cs to point to your database & change the api key to your own TMDB api key in Program.cs.
+You can also edit the connection string to change the database name.
+Run the following commands in the Package Manager Console to create the database:
+``update-database``
+
+## API CALLS
 ### GET Methods
 Some methods require an id in the path
 

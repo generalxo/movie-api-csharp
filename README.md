@@ -3,10 +3,7 @@
 This is a simple minimal API for movies & also calls TMDB's API. It is written in C# and uses ASP.NET Core & It uses a SQL database to store the movies. 
 This API was created as a school project. It is not intended for production use.
 
-To learn more about TMDB visit their website: 
-<picture>
-<a href="https://www.themoviedb.org/"><img width="80" alt="Container diagram." src="github/blue_short-tmdb.svg"></a>
-</picture>
+To learn more about TMDB visit their website: <a href="https://www.themoviedb.org/">here</a>
 
 ### Requirements
 SSMS, Visual Studio, TMDB API Key

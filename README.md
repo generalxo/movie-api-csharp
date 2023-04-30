@@ -19,26 +19,54 @@ Run the following commands in the Package Manager Console to create the database
 Some methods require an id in the path
 
 #### Get all users
-/user
+``/user``
 #### Get a user by id
-/user/{id}
+``/user/{id}``
 #### Get all genres connected to a user
-/getlikedgenre/{id}
+``/getlikedgenre/{id}``
 #### Get all movies by user id
-/getmoviesbyuser/{id}
+``/getmoviesbyuser/{id}``
 #### Get movieRatings by user id
-/getmovieratingsbyuser/{id}
+``/getmovieratingsbyuser/{id}``
 #### Discover New movies with local db id
-/getmoviesbygenre/{id}
+``/getmoviesbygenre/{id}``
 #### Discover New movies with tmdb id
-/getmoviesbygenre/tmdb/{id}
+``/getmoviesbygenre/tmdb/{id}``
 
 ### POST Methods
 All require a JSON body in the request with the appropriate fields
 
 #### Post a new movierating
-/postmovierating
+``/postmovierating``
+
+Example JSON body:
+```
+{
+  "id": 0,
+  "rating": 8,
+  "movieId": 6,
+  "userId": 3
+}
+```
 #### Post a new likedgenre
-/postlikedgenre
+``/postlikedgenre``
+
+Example JSON body:
+```
+{
+  "id": 0,
+  "userId": 1,
+  "genreId": 15
+}
+```
 #### Post a new movie
-/postmovie
+``/postmovie``
+
+Example JSON body:
+```
+{
+  "id": 0,
+  "link": 101,
+  "userId": 1
+}
+```

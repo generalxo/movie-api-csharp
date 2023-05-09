@@ -9,6 +9,19 @@ namespace movie_restful_api_csharp
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+            {
+                builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+            }));
+
+            builder.Services.AddScoped<ApplicationDbContext>();
+            builder.Services.AddScoped<UserRepository>();
+            builder.Services.AddScoped<GenreRepository>();
+            builder.Services.AddScoped<LikedGenreRepository>();
+            builder.Services.AddScoped<MovieRepository>();
+            builder.Services.AddScoped<MovieGenreRepository>();
+            builder.Services.AddScoped<MovieRatingRepository>();
+
             // Add services to the container.
             builder.Services.AddAuthorization();
 
@@ -16,7 +29,9 @@ namespace movie_restful_api_csharp
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
             var app = builder.Build();
+            app.UseCors("corsapp");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -27,51 +42,53 @@ namespace movie_restful_api_csharp
 
             app.UseHttpsRedirection();
 
+            app.UseRouting();
+
             app.UseAuthorization();
 
             #region Get Methods
             // Get All Users
-            app.MapGet("/user", (HttpContext httpContext) =>
+            app.MapGet("/user", (UserRepository userRepository) =>
             {
-                ApplicationDbContext applicationDbContext = new();
-                UserRepository userRepository = new UserRepository(applicationDbContext);
-
-                return userRepository.GetAll();
+                var query = userRepository.GetAll().AsQueryable().Select(u => new { u.Id, u.FirstName, u.LastName, u.Email });
+                return query;
             })
                 .WithName("GetAllUsers");
 
             // Get all genres connected to a user
-            app.MapGet("/getlikedgenre/{id}", (HttpContext httpContext, int id) =>
+            app.MapGet("/getlikedgenre/{id}", (LikedGenreRepository likedGenreRepository, UserRepository userRepository, GenreRepository genreRepository, int id) =>
             {
-                ApplicationDbContext applicationDbContext = new();
-                LikedGenreRepository likedGenre = new LikedGenreRepository(applicationDbContext);
-                UserRepository userRepository = new UserRepository(applicationDbContext);
-                GenreRepository genreRepository = new GenreRepository(applicationDbContext);
-
-                var query = likedGenre.GetByCondition(q => q.UserId == id).Join(genreRepository.GetAll(),
-                likedGenre => likedGenre.GenreId,
-                genre => genre.Id,
-                (likedGenre, genre) => genre).ToList();
+                var query = likedGenreRepository.GetByCondition(q => q.UserId == id).Join(genreRepository.GetAll(),
+                    likedGenre => likedGenre.GenreId,
+                    genre => genre.Id,
+                    (likedGenre, genre) => genre).Select(g => new
+                    {
+                        id = g.Id,
+                        tmdbId = g.TmdbId,
+                        title = g.Title,
+                        description = g.Description
+                    })
+                        .ToList();
 
                 return query;
             })
                 .WithName("GetGenresByUser");
 
             //Get all movies by movie.user_id
-            app.MapGet("/getmoviesbyuser/{id}", (HttpContext httpContext, int id) =>
+            app.MapGet("/getmoviesbyuser/{id}", (MovieRepository movieRepository, int id) =>
             {
-                ApplicationDbContext applicationDbContext = new();
-                MovieRepository movieRepository = new MovieRepository(applicationDbContext);
-                return movieRepository.GetByCondition(q => q.UserId == id);
+                var query = movieRepository.GetByCondition(q => q.UserId == id).AsQueryable().Select(m => new { m.Id, m.UserId, m.Link });
+
+                return query;
             })
                 .WithName("/GetMoviesByUser");
 
-            //Get all movieRatings by movie.user_id
-            app.MapGet("/getmovieratingsbyuser/{id}", (HttpContext httpContext, int id) =>
+            ////Get all movieRatings by movie.user_id
+            app.MapGet("/getmovieratingsbyuser/{id}", (MovieRatingRepository movieRatingRepository, int id) =>
             {
-                ApplicationDbContext applicationDbContext = new();
-                MovieRatingRepository movieRatingRepository = new MovieRatingRepository(applicationDbContext);
-                return movieRatingRepository.GetByCondition(q => q.UserId == id);
+                var query = movieRatingRepository.GetByCondition(q => q.UserId == id).AsQueryable().Select(m => new { m.Id, m.UserId, m.MovieId, m.Rating });
+
+                return query;
             })
                 .WithName("/GetMovieRatingsByUser");
 
@@ -84,7 +101,7 @@ namespace movie_restful_api_csharp
                 int tmdb_id = genre[0].TmdbId;
 
                 //Edit api_key to your own key from TMDB
-                var api_key = "Your api key";
+                var api_key = "b5ced27703b7b4556f41ed1063214729";
                 var client = new HttpClient();
                 var response = client.GetAsync($"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_genres={tmdb_id}").Result;
                 var content = response.Content.ReadAsStringAsync().Result;
@@ -96,7 +113,7 @@ namespace movie_restful_api_csharp
             app.MapGet("getmoviesbygenre/tmdb/{id}", (HttpContext httpContext, int id) =>
             {
                 //Edit api_key to your own key from TMDB
-                var api_key = "Your api key";
+                var api_key = "b5ced27703b7b4556f41ed1063214729";
                 var client = new HttpClient();
                 var response = client.GetAsync($"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_genres={id}").Result;
                 var content = response.Content.ReadAsStringAsync().Result;

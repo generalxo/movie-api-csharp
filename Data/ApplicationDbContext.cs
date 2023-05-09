@@ -18,13 +18,51 @@ namespace movie_restful_api_csharp.Data
         {
             //Connection string
             //Edit the Data Source to your own SQL Server
-            optionsBuilder.UseSqlServer("Data Source=CHANGE-ME; Initial Catalog=DevMovieDb;Integrated Security=true");
-
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-JD35EGR; Initial Catalog=DevMovieDb;Integrated Security=true");
         }
 
         // Database seeding
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Mapping Foreign Keys
+
+            //LikedGenreModel Users
+            modelBuilder.Entity<LikedGenreModel>()
+                .HasOne(x => x.Users)
+                .WithMany(x => x.LikedGenres)
+                .HasForeignKey(x => x.UserId);
+            modelBuilder.Entity<LikedGenreModel>()
+                .HasOne(x => x.Genres)
+                .WithMany(x => x.LikedGenres)
+                .HasForeignKey(x => x.GenreId);
+
+            //MovieModel Movies
+            modelBuilder.Entity<MovieModel>()
+                .HasOne(y => y.Users)
+                .WithMany(y => y.Movies)
+                .HasForeignKey(y => y.UserId);
+
+            //MovieGenreModel MovieGenres
+            modelBuilder.Entity<MovieGenreModel>()
+                .HasOne(x => x.Genres)
+                .WithMany(x => x.MovieGenres)
+                .HasForeignKey(x => x.GenreId);
+            modelBuilder.Entity<MovieGenreModel>()
+                .HasOne(x => x.Movies)
+                .WithMany(x => x.MovieGenres)
+                .HasForeignKey(x => x.MovieId);
+
+            //MovieRatingModel MovieRatings
+            modelBuilder.Entity<MovieRatingModel>()
+                .HasOne(x => x.Movies)
+                .WithMany(x => x.MovieRatings)
+                .HasForeignKey(x => x.MovieId);
+            modelBuilder.Entity<MovieRatingModel>()
+                .HasOne(x => x.Users)
+                .WithMany(x => x.MovieRatings)
+                .HasForeignKey(x => x.UserId);
+
+            //TestData Change or Remove if u want
             modelBuilder.Entity<GenreModel>().HasData(new GenreModel[] {
                 new GenreModel{Id= 1,TmdbId=28,Title="Action", Description="Explosions, Guns & Violence"},
                 new GenreModel{Id= 2,TmdbId=12,Title="Adventure", Description="Explore new things"},
@@ -45,6 +83,75 @@ namespace movie_restful_api_csharp.Data
                 new GenreModel{Id= 17,TmdbId=53,Title="Thriller", Description="Suspense, excitement, surprise, anticipation and anxiety"},
                 new GenreModel{Id= 18,TmdbId=10752,Title="War", Description="Warfare & battles"},
                 new GenreModel{Id= 19,TmdbId=37,Title="Western", Description="Cowboys, Cowgirls & Bandits"}
+            });
+
+            modelBuilder.Entity<UserModel>().HasData(new UserModel[]
+            {
+                new UserModel{Id= 1, FirstName="John", LastName="Doe", Email="Jhon@Doe.com"},
+                new UserModel{Id= 2, FirstName="Elon", LastName="Tusk", Email="Elon@Tusk.com"},
+                new UserModel{Id= 3, FirstName="Peter", LastName="Panda", Email="Peter@Panda.com"},
+                new UserModel{Id= 4, FirstName="Sara", LastName="Smith", Email="Sara@Smith.com"},
+                new UserModel{Id= 5, FirstName="Harry", LastName="Pilsner", Email="Harry@Pilsner.com"}
+            });
+
+            modelBuilder.Entity<LikedGenreModel>().HasData(new LikedGenreModel[]
+            {
+                new LikedGenreModel{Id= 1, UserId=1, GenreId=1},
+                new LikedGenreModel{Id= 2, UserId=2, GenreId=2},
+                new LikedGenreModel{Id= 3, UserId=2, GenreId=3},
+                new LikedGenreModel{Id= 4, UserId=3, GenreId=4},
+                new LikedGenreModel{Id= 5, UserId=3, GenreId=5},
+                new LikedGenreModel{Id= 6, UserId=3, GenreId=6},
+                new LikedGenreModel{Id= 7, UserId=4, GenreId=7},
+                new LikedGenreModel{Id= 8, UserId=4, GenreId=8},
+                new LikedGenreModel{Id= 9, UserId=4, GenreId=9},
+                new LikedGenreModel{Id= 10, UserId=4, GenreId=10},
+                new LikedGenreModel{Id= 11, UserId=5, GenreId=11},
+                new LikedGenreModel{Id= 12, UserId=5, GenreId=12},
+                new LikedGenreModel{Id= 13, UserId=5, GenreId=13},
+                new LikedGenreModel{Id= 14, UserId=5, GenreId=14},
+                new LikedGenreModel{Id= 15, UserId=5, GenreId=15},
+            });
+
+            modelBuilder.Entity<MovieModel>().HasData(new MovieModel[]
+            {
+                new MovieModel{Id= 1, Link=128, UserId=1},
+                new MovieModel{Id= 2, Link=128, UserId=2},
+                new MovieModel{Id= 3, Link=26587, UserId=2},
+                new MovieModel{Id= 4, Link=128, UserId=3},
+                new MovieModel{Id= 5, Link=26587, UserId=3},
+                new MovieModel{Id= 6, Link=101, UserId=3},
+                new MovieModel{Id= 7, Link=128, UserId=4},
+                new MovieModel{Id= 8, Link=128, UserId=5}
+            });
+
+            modelBuilder.Entity<MovieGenreModel>().HasData(new MovieGenreModel[]
+            {
+                new MovieGenreModel{Id= 1, MovieId=1, GenreId=1},
+                new MovieGenreModel{Id= 2, MovieId=1, GenreId=2},
+                new MovieGenreModel{Id= 3, MovieId=1, GenreId=3},
+                new MovieGenreModel{Id= 4, MovieId=2, GenreId=4},
+                new MovieGenreModel{Id= 5, MovieId=2, GenreId=5},
+                new MovieGenreModel{Id= 6, MovieId=2, GenreId=6},
+                new MovieGenreModel{Id= 7, MovieId=3, GenreId=7},
+                new MovieGenreModel{Id= 8, MovieId=3, GenreId=8},
+                new MovieGenreModel{Id= 9, MovieId=3, GenreId=9},
+                new MovieGenreModel{Id= 10, MovieId=4, GenreId=10},
+                new MovieGenreModel{Id= 11, MovieId=4, GenreId=11},
+                new MovieGenreModel{Id= 12, MovieId=4, GenreId=12},
+                new MovieGenreModel{Id= 13, MovieId=5, GenreId=13},
+                new MovieGenreModel{Id= 14, MovieId=5, GenreId=14},
+                new MovieGenreModel{Id= 15, MovieId=5, GenreId=15},
+            });
+
+            modelBuilder.Entity<MovieRatingModel>().HasData(new MovieRatingModel[]
+            {
+                new MovieRatingModel{Id=1, Rating= 10, MovieId=1, UserId=1},
+                new MovieRatingModel{Id=2, Rating= 7, MovieId=2, UserId=2},
+                new MovieRatingModel{Id=3, Rating= 10, MovieId=6, UserId=3},
+                new MovieRatingModel{Id=4, Rating= 9, MovieId=7, UserId=4},
+                new MovieRatingModel{Id=5, Rating= 8, MovieId=8, UserId=5},
+
             });
         }
 

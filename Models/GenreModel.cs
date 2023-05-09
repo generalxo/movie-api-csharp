@@ -17,5 +17,10 @@ namespace movie_system_csharp.Models
         [StringLength(250)]
         public string? Description { get; set; }
 
+        // Navigation Properties
+        public IEnumerable<LikedGenreModel> LikedGenres { get; set; }
+        public IEnumerable<MovieGenreModel> MovieGenres { get; set; }
+
+
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace movie_system_csharp.Models
 {
@@ -8,14 +7,15 @@ namespace movie_system_csharp.Models
         //Primary Key
         [Key]
         public int Id { get; set; }
-        [Required]
-        [ForeignKey("Users")]
-        public int UserId { get; set; }
-        public virtual UserModel Users { get; set; }
 
+        //Foreign Keys
         [Required]
-        [ForeignKey("Genres")]
+        public int UserId { get; set; }
+        [Required]
         public int GenreId { get; set; }
+
+        //Navigation Properties
+        public virtual UserModel Users { get; set; }
         public virtual GenreModel Genres { get; set; }
 
     }

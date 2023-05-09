@@ -7,8 +7,16 @@ namespace movie_system_csharp.Models
         [Key]
         public int Id { get; set; }
 
-        public string? Name { get; set; }
+        //Entity
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
         public string? Email { get; set; }
+
+        //Navigation Properties
+
+        public IEnumerable<MovieRatingModel> MovieRatings { get; set; }
+        public IEnumerable<LikedGenreModel> LikedGenres { get; set; }
+        public IEnumerable<MovieModel> Movies { get; set; }
 
     }
 }

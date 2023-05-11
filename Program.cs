@@ -51,9 +51,16 @@ namespace movie_restful_api_csharp
             app.MapGet("/user", (UserRepository userRepository) =>
             {
                 var query = userRepository.GetAll().AsQueryable().Select(u => new { u.Id, u.FirstName, u.LastName, u.Email });
-                return query;
+                return query.ToList();
             })
                 .WithName("GetAllUsers");
+
+            app.MapGet("/user/{id}", (UserRepository userRepository, int id) =>
+            {
+                var query = userRepository.GetByCondition(q => q.Id == id).AsQueryable().Select(u => new { u.FirstName, u.LastName, u.Email });
+                return query;
+            })
+                .WithName("GetUserById");
 
             // Get all genres connected to a user
             app.MapGet("/getlikedgenre/{id}", (LikedGenreRepository likedGenreRepository, UserRepository userRepository, GenreRepository genreRepository, int id) =>
@@ -79,7 +86,7 @@ namespace movie_restful_api_csharp
             {
                 var query = movieRepository.GetByCondition(q => q.UserId == id).AsQueryable().Select(m => new { m.Id, m.UserId, m.Link });
 
-                return query;
+                return query.ToList();
             })
                 .WithName("/GetMoviesByUser");
 
@@ -88,7 +95,7 @@ namespace movie_restful_api_csharp
             {
                 var query = movieRatingRepository.GetByCondition(q => q.UserId == id).AsQueryable().Select(m => new { m.Id, m.UserId, m.MovieId, m.Rating });
 
-                return query;
+                return query.ToList();
             })
                 .WithName("/GetMovieRatingsByUser");
 
@@ -101,7 +108,7 @@ namespace movie_restful_api_csharp
                 int tmdb_id = genre[0].TmdbId;
 
                 //Edit api_key to your own key from TMDB
-                var api_key = "b5ced27703b7b4556f41ed1063214729";
+                var api_key = "UR_API_KEY_HERE";
                 var client = new HttpClient();
                 var response = client.GetAsync($"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_genres={tmdb_id}").Result;
                 var content = response.Content.ReadAsStringAsync().Result;
@@ -113,7 +120,7 @@ namespace movie_restful_api_csharp
             app.MapGet("getmoviesbygenre/tmdb/{id}", (HttpContext httpContext, int id) =>
             {
                 //Edit api_key to your own key from TMDB
-                var api_key = "b5ced27703b7b4556f41ed1063214729";
+                var api_key = "UR_API_KEY_HERE";
                 var client = new HttpClient();
                 var response = client.GetAsync($"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_genres={id}").Result;
                 var content = response.Content.ReadAsStringAsync().Result;

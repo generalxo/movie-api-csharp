@@ -558,13 +558,13 @@ namespace movie_restful_api_csharp.Migrations
                     b.HasOne("movie_system_csharp.Models.GenreModel", "Genres")
                         .WithMany("LikedGenres")
                         .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("movie_system_csharp.Models.UserModel", "Users")
                         .WithMany("LikedGenres")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Genres");
@@ -577,13 +577,13 @@ namespace movie_restful_api_csharp.Migrations
                     b.HasOne("movie_system_csharp.Models.GenreModel", "Genres")
                         .WithMany("MovieGenres")
                         .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("movie_system_csharp.Models.MovieModel", "Movies")
                         .WithMany("MovieGenres")
                         .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Genres");
@@ -596,7 +596,7 @@ namespace movie_restful_api_csharp.Migrations
                     b.HasOne("movie_system_csharp.Models.UserModel", "Users")
                         .WithMany("Movies")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Users");

@@ -11,7 +11,7 @@ using movie_restful_api_csharp.Data;
 namespace movie_restful_api_csharp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230515063825_migration")]
+    [Migration("20230515070721_migration")]
     partial class migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

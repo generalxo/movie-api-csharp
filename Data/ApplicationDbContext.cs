@@ -105,14 +105,14 @@ namespace movie_restful_api_csharp.Data
 
             modelBuilder.Entity<MovieModel>().HasData(new MovieModel[]
             {
-                new MovieModel{Id= 1, Rating=10, Link=128, UserId=1},
-                new MovieModel{Id= 2, Rating=5, Link=128, UserId=2},
-                new MovieModel{Id= 3, Rating=7, Link=26587, UserId=2},
-                new MovieModel{Id= 4, Rating=3, Link=128, UserId=3},
-                new MovieModel{Id= 5, Rating=9, Link=26587, UserId=3},
-                new MovieModel{Id= 6, Rating=5, Link=101, UserId=3},
-                new MovieModel{Id= 7, Rating=6, Link=128, UserId=4},
-                new MovieModel{Id= 8, Rating=9, Link=128, UserId=5}
+                new MovieModel{Id= 1, Link=128, Rating=10, UserId=1},
+                new MovieModel{Id= 2, Link=128, Rating=5, UserId=2},
+                new MovieModel{Id= 3, Link=26587, Rating=7, UserId=2},
+                new MovieModel{Id= 4, Link=128, Rating=3, UserId=3},
+                new MovieModel{Id= 5, Link=26587, Rating=9, UserId=3},
+                new MovieModel{Id= 6, Link=101, Rating=5, UserId=3},
+                new MovieModel{Id= 7, Link=128, Rating=6, UserId=4},
+                new MovieModel{Id= 8, Link=128, Rating=9, UserId=5}
             });
 
             modelBuilder.Entity<MovieGenreModel>().HasData(new MovieGenreModel[]

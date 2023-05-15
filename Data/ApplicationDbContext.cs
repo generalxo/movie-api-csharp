@@ -17,7 +17,7 @@ namespace movie_restful_api_csharp.Data
         {
             //Connection string
             //Edit the Data Source to your own SQL Server
-            optionsBuilder.UseSqlServer("Data Source=CHANGE_ME; Initial Catalog=DevMovieDb;Integrated Security=true");
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-JD35EGR; Initial Catalog=DevMovieDb;Integrated Security=true");
         }
 
         // Database seeding

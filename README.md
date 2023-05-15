@@ -36,18 +36,6 @@ Some methods require an id in the path
 ### POST Methods
 All require a JSON body in the request with the appropriate fields
 
-#### Post a new movierating
-``/postmovierating``
-
-Example JSON body:
-```
-{
-  "id": 0,
-  "rating": 8,
-  "movieId": 6,
-  "userId": 3
-}
-```
 #### Post a new likedgenre
 ``/postlikedgenre``
 
@@ -67,6 +55,7 @@ Example JSON body:
 {
   "id": 0,
   "link": 101,
+  "rating": 5,
   "userId": 1
 }
 ```

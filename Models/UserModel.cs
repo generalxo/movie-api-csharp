@@ -14,7 +14,6 @@ namespace movie_system_csharp.Models
 
         //Navigation Properties
 
-        public IEnumerable<MovieRatingModel> MovieRatings { get; set; }
         public IEnumerable<LikedGenreModel> LikedGenres { get; set; }
         public IEnumerable<MovieModel> Movies { get; set; }
 

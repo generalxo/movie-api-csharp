@@ -11,6 +11,7 @@ namespace movie_system_csharp.Models
         //Entity
         [Required]
         public int Link { get; set; }
+        public int Rating { get; set; }
 
         //Foregin Key
         [Required]
@@ -19,6 +20,5 @@ namespace movie_system_csharp.Models
         //Navigation properties
         public virtual UserModel Users { get; set; }
         public IEnumerable<MovieGenreModel> MovieGenres { get; set; }
-        public IEnumerable<MovieRatingModel> MovieRatings { get; set; }
     }
 }

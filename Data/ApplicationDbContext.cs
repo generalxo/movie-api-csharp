@@ -11,14 +11,13 @@ namespace movie_restful_api_csharp.Data
         public DbSet<LikedGenreModel> LikedGenres { get; set; }
         public DbSet<MovieModel> Moveis { get; set; }
         public DbSet<MovieGenreModel> MovieGenres { get; set; }
-        public DbSet<MovieRatingModel> MovieRatings { get; set; }
 
         // Database connection
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //Connection string
             //Edit the Data Source to your own SQL Server
-            optionsBuilder.UseSqlServer("Data Source=UR_PC_NAME; Initial Catalog=DevMovieDb;Integrated Security=true");
+            optionsBuilder.UseSqlServer("Data Source=CHANGE_ME; Initial Catalog=DevMovieDb;Integrated Security=true");
         }
 
         // Database seeding
@@ -52,15 +51,6 @@ namespace movie_restful_api_csharp.Data
                 .WithMany(x => x.MovieGenres)
                 .HasForeignKey(x => x.MovieId);
 
-            //MovieRatingModel MovieRatings
-            modelBuilder.Entity<MovieRatingModel>()
-                .HasOne(x => x.Movies)
-                .WithMany(x => x.MovieRatings)
-                .HasForeignKey(x => x.MovieId);
-            modelBuilder.Entity<MovieRatingModel>()
-                .HasOne(x => x.Users)
-                .WithMany(x => x.MovieRatings)
-                .HasForeignKey(x => x.UserId);
 
             //TestData Change or Remove if u want
             modelBuilder.Entity<GenreModel>().HasData(new GenreModel[] {
@@ -115,14 +105,14 @@ namespace movie_restful_api_csharp.Data
 
             modelBuilder.Entity<MovieModel>().HasData(new MovieModel[]
             {
-                new MovieModel{Id= 1, Link=128, UserId=1},
-                new MovieModel{Id= 2, Link=128, UserId=2},
-                new MovieModel{Id= 3, Link=26587, UserId=2},
-                new MovieModel{Id= 4, Link=128, UserId=3},
-                new MovieModel{Id= 5, Link=26587, UserId=3},
-                new MovieModel{Id= 6, Link=101, UserId=3},
-                new MovieModel{Id= 7, Link=128, UserId=4},
-                new MovieModel{Id= 8, Link=128, UserId=5}
+                new MovieModel{Id= 1, Rating=10, Link=128, UserId=1},
+                new MovieModel{Id= 2, Rating=5, Link=128, UserId=2},
+                new MovieModel{Id= 3, Rating=7, Link=26587, UserId=2},
+                new MovieModel{Id= 4, Rating=3, Link=128, UserId=3},
+                new MovieModel{Id= 5, Rating=9, Link=26587, UserId=3},
+                new MovieModel{Id= 6, Rating=5, Link=101, UserId=3},
+                new MovieModel{Id= 7, Rating=6, Link=128, UserId=4},
+                new MovieModel{Id= 8, Rating=9, Link=128, UserId=5}
             });
 
             modelBuilder.Entity<MovieGenreModel>().HasData(new MovieGenreModel[]
@@ -144,15 +134,6 @@ namespace movie_restful_api_csharp.Data
                 new MovieGenreModel{Id= 15, MovieId=5, GenreId=15},
             });
 
-            modelBuilder.Entity<MovieRatingModel>().HasData(new MovieRatingModel[]
-            {
-                new MovieRatingModel{Id=1, Rating= 10, MovieId=1, UserId=1},
-                new MovieRatingModel{Id=2, Rating= 7, MovieId=2, UserId=2},
-                new MovieRatingModel{Id=3, Rating= 10, MovieId=6, UserId=3},
-                new MovieRatingModel{Id=4, Rating= 9, MovieId=7, UserId=4},
-                new MovieRatingModel{Id=5, Rating= 8, MovieId=8, UserId=5},
-
-            });
         }
 
     }

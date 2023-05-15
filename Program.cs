@@ -20,7 +20,7 @@ namespace movie_restful_api_csharp
             builder.Services.AddScoped<LikedGenreRepository>();
             builder.Services.AddScoped<MovieRepository>();
             builder.Services.AddScoped<MovieGenreRepository>();
-            builder.Services.AddScoped<MovieRatingRepository>();
+            //builder.Services.AddScoped<MovieRatingRepository>();
 
             // Add services to the container.
             builder.Services.AddAuthorization();
@@ -84,20 +84,13 @@ namespace movie_restful_api_csharp
             //Get all movies by movie.user_id
             app.MapGet("/getmoviesbyuser/{id}", (MovieRepository movieRepository, int id) =>
             {
-                var query = movieRepository.GetByCondition(q => q.UserId == id).AsQueryable().Select(m => new { m.Id, m.UserId, m.Link });
+                var query = movieRepository.GetByCondition(q => q.UserId == id).AsQueryable().Select(m => new { m.Id, m.Rating, m.UserId, m.Link });
 
                 return query.ToList();
             })
                 .WithName("/GetMoviesByUser");
 
-            ////Get all movieRatings by movie.user_id
-            app.MapGet("/getmovieratingsbyuser/{id}", (MovieRatingRepository movieRatingRepository, int id) =>
-            {
-                var query = movieRatingRepository.GetByCondition(q => q.UserId == id).AsQueryable().Select(m => new { m.Id, m.UserId, m.MovieId, m.Rating });
 
-                return query.ToList();
-            })
-                .WithName("/GetMovieRatingsByUser");
 
             //Discover New movies with local db id
             app.MapGet("/getmoviesbygenre/{id}", (HttpContext httpContext, int id) =>
@@ -108,7 +101,7 @@ namespace movie_restful_api_csharp
                 int tmdb_id = genre[0].TmdbId;
 
                 //Edit api_key to your own key from TMDB
-                var api_key = "UR_API_KEY_HERE";
+                var api_key = "CHANGE_ME";
                 var client = new HttpClient();
                 var response = client.GetAsync($"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_genres={tmdb_id}").Result;
                 var content = response.Content.ReadAsStringAsync().Result;
@@ -120,7 +113,7 @@ namespace movie_restful_api_csharp
             app.MapGet("getmoviesbygenre/tmdb/{id}", (HttpContext httpContext, int id) =>
             {
                 //Edit api_key to your own key from TMDB
-                var api_key = "UR_API_KEY_HERE";
+                var api_key = "CHANGE_ME";
                 var client = new HttpClient();
                 var response = client.GetAsync($"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_genres={id}").Result;
                 var content = response.Content.ReadAsStringAsync().Result;
@@ -131,16 +124,6 @@ namespace movie_restful_api_csharp
             #endregion
 
             #region Post Methods
-            //Post a new movierating
-            app.MapPost("/postmovierating", (HttpContext httpContext, MovieRatingModel movieRatingModel) =>
-            {
-                ApplicationDbContext applicationDbContext = new();
-                MovieRatingRepository movieRatingRepository = new MovieRatingRepository(applicationDbContext);
-                movieRatingRepository.Create(movieRatingModel);
-                applicationDbContext.SaveChanges();
-                return movieRatingModel;
-            })
-                .WithName("PostMovieRating");
 
             //Post a new likedgenre
             app.MapPost("/postlikedgenre", (HttpContext httpContext, LikedGenreModel likedGenreModel) =>

@@ -203,6 +203,98 @@ namespace movie_restful_api_csharp.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("LikedGenres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            GenreId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            GenreId = 2,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            GenreId = 3,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            GenreId = 4,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            GenreId = 5,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 6,
+                            GenreId = 6,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 7,
+                            GenreId = 7,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 8,
+                            GenreId = 8,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 9,
+                            GenreId = 9,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 10,
+                            GenreId = 10,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 11,
+                            GenreId = 11,
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 12,
+                            GenreId = 12,
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 13,
+                            GenreId = 13,
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 14,
+                            GenreId = 14,
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 15,
+                            GenreId = 15,
+                            UserId = 5
+                        });
                 });
 
             modelBuilder.Entity("movie_system_csharp.Models.MovieGenreModel", b =>
@@ -226,6 +318,98 @@ namespace movie_restful_api_csharp.Migrations
                     b.HasIndex("MovieId");
 
                     b.ToTable("MovieGenres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            GenreId = 1,
+                            MovieId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            GenreId = 2,
+                            MovieId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            GenreId = 3,
+                            MovieId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            GenreId = 4,
+                            MovieId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            GenreId = 5,
+                            MovieId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            GenreId = 6,
+                            MovieId = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            GenreId = 7,
+                            MovieId = 3
+                        },
+                        new
+                        {
+                            Id = 8,
+                            GenreId = 8,
+                            MovieId = 3
+                        },
+                        new
+                        {
+                            Id = 9,
+                            GenreId = 9,
+                            MovieId = 3
+                        },
+                        new
+                        {
+                            Id = 10,
+                            GenreId = 10,
+                            MovieId = 4
+                        },
+                        new
+                        {
+                            Id = 11,
+                            GenreId = 11,
+                            MovieId = 4
+                        },
+                        new
+                        {
+                            Id = 12,
+                            GenreId = 12,
+                            MovieId = 4
+                        },
+                        new
+                        {
+                            Id = 13,
+                            GenreId = 13,
+                            MovieId = 5
+                        },
+                        new
+                        {
+                            Id = 14,
+                            GenreId = 14,
+                            MovieId = 5
+                        },
+                        new
+                        {
+                            Id = 15,
+                            GenreId = 15,
+                            MovieId = 5
+                        });
                 });
 
             modelBuilder.Entity("movie_system_csharp.Models.MovieModel", b =>
@@ -239,27 +423,6 @@ namespace movie_restful_api_csharp.Migrations
                     b.Property<int>("Link")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Moveis");
-                });
-
-            modelBuilder.Entity("movie_system_csharp.Models.MovieRatingModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
@@ -268,11 +431,67 @@ namespace movie_restful_api_csharp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieId");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("MovieRatings");
+                    b.ToTable("Moveis");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Link = 128,
+                            Rating = 10,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Link = 128,
+                            Rating = 5,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Link = 26587,
+                            Rating = 7,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Link = 128,
+                            Rating = 3,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Link = 26587,
+                            Rating = 9,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Link = 101,
+                            Rating = 5,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Link = 128,
+                            Rating = 6,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Link = 128,
+                            Rating = 9,
+                            UserId = 5
+                        });
                 });
 
             modelBuilder.Entity("movie_system_csharp.Models.UserModel", b =>
@@ -286,24 +505,64 @@ namespace movie_restful_api_csharp.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "Jhon@Doe.com",
+                            FirstName = "John",
+                            LastName = "Doe"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "Elon@Tusk.com",
+                            FirstName = "Elon",
+                            LastName = "Tusk"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "Peter@Panda.com",
+                            FirstName = "Peter",
+                            LastName = "Panda"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "Sara@Smith.com",
+                            FirstName = "Sara",
+                            LastName = "Smith"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Email = "Harry@Pilsner.com",
+                            FirstName = "Harry",
+                            LastName = "Pilsner"
+                        });
                 });
 
             modelBuilder.Entity("movie_system_csharp.Models.LikedGenreModel", b =>
                 {
                     b.HasOne("movie_system_csharp.Models.GenreModel", "Genres")
-                        .WithMany()
+                        .WithMany("LikedGenres")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("movie_system_csharp.Models.UserModel", "Users")
-                        .WithMany()
+                        .WithMany("LikedGenres")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -316,13 +575,13 @@ namespace movie_restful_api_csharp.Migrations
             modelBuilder.Entity("movie_system_csharp.Models.MovieGenreModel", b =>
                 {
                     b.HasOne("movie_system_csharp.Models.GenreModel", "Genres")
-                        .WithMany()
+                        .WithMany("MovieGenres")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("movie_system_csharp.Models.MovieModel", "Movies")
-                        .WithMany()
+                        .WithMany("MovieGenres")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -335,7 +594,7 @@ namespace movie_restful_api_csharp.Migrations
             modelBuilder.Entity("movie_system_csharp.Models.MovieModel", b =>
                 {
                     b.HasOne("movie_system_csharp.Models.UserModel", "Users")
-                        .WithMany()
+                        .WithMany("Movies")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -343,23 +602,23 @@ namespace movie_restful_api_csharp.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("movie_system_csharp.Models.MovieRatingModel", b =>
+            modelBuilder.Entity("movie_system_csharp.Models.GenreModel", b =>
                 {
-                    b.HasOne("movie_system_csharp.Models.MovieModel", "Movies")
-                        .WithMany()
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("LikedGenres");
 
-                    b.HasOne("movie_system_csharp.Models.UserModel", "Users")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("MovieGenres");
+                });
+
+            modelBuilder.Entity("movie_system_csharp.Models.MovieModel", b =>
+                {
+                    b.Navigation("MovieGenres");
+                });
+
+            modelBuilder.Entity("movie_system_csharp.Models.UserModel", b =>
+                {
+                    b.Navigation("LikedGenres");
 
                     b.Navigation("Movies");
-
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

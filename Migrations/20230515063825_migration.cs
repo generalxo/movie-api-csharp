@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
-// Auto generated code has been slightly modified. All tables have no action on delete.
+
 namespace movie_restful_api_csharp.Migrations
 {
-    public partial class firstmigration : Migration
+    public partial class migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,8 @@ namespace movie_restful_api_csharp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -70,6 +71,7 @@ namespace movie_restful_api_csharp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Link = table.Column<int>(type: "int", nullable: false),
+                    Rating = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -109,33 +111,6 @@ namespace movie_restful_api_csharp.Migrations
                         onDelete: ReferentialAction.NoAction);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "MovieRatings",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Rating = table.Column<int>(type: "int", nullable: false),
-                    MovieId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MovieRatings", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_MovieRatings_Moveis_MovieId",
-                        column: x => x.MovieId,
-                        principalTable: "Moveis",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_MovieRatings_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                });
-
             migrationBuilder.InsertData(
                 table: "Genres",
                 columns: new[] { "Id", "Description", "Title", "TmdbId" },
@@ -162,6 +137,77 @@ namespace movie_restful_api_csharp.Migrations
                     { 19, "Cowboys, Cowgirls & Bandits", "Western", 37 }
                 });
 
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "FirstName", "LastName" },
+                values: new object[,]
+                {
+                    { 1, "Jhon@Doe.com", "John", "Doe" },
+                    { 2, "Elon@Tusk.com", "Elon", "Tusk" },
+                    { 3, "Peter@Panda.com", "Peter", "Panda" },
+                    { 4, "Sara@Smith.com", "Sara", "Smith" },
+                    { 5, "Harry@Pilsner.com", "Harry", "Pilsner" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "LikedGenres",
+                columns: new[] { "Id", "GenreId", "UserId" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 2, 2 },
+                    { 3, 3, 2 },
+                    { 4, 4, 3 },
+                    { 5, 5, 3 },
+                    { 6, 6, 3 },
+                    { 7, 7, 4 },
+                    { 8, 8, 4 },
+                    { 9, 9, 4 },
+                    { 10, 10, 4 },
+                    { 11, 11, 5 },
+                    { 12, 12, 5 },
+                    { 13, 13, 5 },
+                    { 14, 14, 5 },
+                    { 15, 15, 5 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Moveis",
+                columns: new[] { "Id", "Link", "Rating", "UserId" },
+                values: new object[,]
+                {
+                    { 1, 128, 10, 1 },
+                    { 2, 128, 5, 2 },
+                    { 3, 26587, 7, 2 },
+                    { 4, 128, 3, 3 },
+                    { 5, 26587, 9, 3 },
+                    { 6, 101, 5, 3 },
+                    { 7, 128, 6, 4 },
+                    { 8, 128, 9, 5 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "MovieGenres",
+                columns: new[] { "Id", "GenreId", "MovieId" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 2, 1 },
+                    { 3, 3, 1 },
+                    { 4, 4, 2 },
+                    { 5, 5, 2 },
+                    { 6, 6, 2 },
+                    { 7, 7, 3 },
+                    { 8, 8, 3 },
+                    { 9, 9, 3 },
+                    { 10, 10, 4 },
+                    { 11, 11, 4 },
+                    { 12, 12, 4 },
+                    { 13, 13, 5 },
+                    { 14, 14, 5 },
+                    { 15, 15, 5 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_LikedGenres_GenreId",
                 table: "LikedGenres",
@@ -186,16 +232,6 @@ namespace movie_restful_api_csharp.Migrations
                 name: "IX_MovieGenres_MovieId",
                 table: "MovieGenres",
                 column: "MovieId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MovieRatings_MovieId",
-                table: "MovieRatings",
-                column: "MovieId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MovieRatings_UserId",
-                table: "MovieRatings",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -205,9 +241,6 @@ namespace movie_restful_api_csharp.Migrations
 
             migrationBuilder.DropTable(
                 name: "MovieGenres");
-
-            migrationBuilder.DropTable(
-                name: "MovieRatings");
 
             migrationBuilder.DropTable(
                 name: "Genres");

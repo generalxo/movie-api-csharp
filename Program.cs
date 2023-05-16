@@ -55,12 +55,21 @@ namespace movie_restful_api_csharp
             })
                 .WithName("GetAllUsers");
 
+            // Get User by Id
             app.MapGet("/user/{id}", (UserRepository userRepository, int id) =>
             {
                 var query = userRepository.GetByCondition(q => q.Id == id).AsQueryable().Select(u => new { u.FirstName, u.LastName, u.Email });
                 return query;
             })
                 .WithName("GetUserById");
+
+            // Get All Genres
+            app.MapGet("/genre", (GenreRepository genreRepository) =>
+            {
+                var query = genreRepository.GetAll().AsQueryable().Select(u => new { u.Id, u.TmdbId, u.Title, u.Description });
+                return query.ToList();
+            })
+                .WithName("GetAllGenres");
 
             // Get all genres connected to a user
             app.MapGet("/getlikedgenre/{id}", (LikedGenreRepository likedGenreRepository, UserRepository userRepository, GenreRepository genreRepository, int id) =>
